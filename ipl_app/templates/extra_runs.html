@@ -1,0 +1,94 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'home.css' %}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- semantic UI -->
+    <link rel="stylesheet" type='text/css'
+          href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+    <!--Chart js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
+            integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css"
+          integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous"/>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <title>Extra Runs</title>
+</head>
+
+<body>
+<header>
+    <div class="main">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li class="active"><a href="/extra_runs">Extra Runs</a></li>
+            <li><a href="/economical_bowler">EconomicalBowler</a></li>
+            <li><a href="/team_victory_chart">TeamVictoryChart</a></li>
+        </ul>
+    </div>
+</header>
+
+<form method="post">
+    {% csrf_token %}
+    <div style="padding: 20px">
+        <div class="row" style="color: yellow" align="center">
+            {{ form.form }}
+            <button type="submit" class="btn btn-success">Go</button>
+        </div>
+    </div>
+</form>
+
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [{% for x in data %}'{{ x.bowling_team }}',{% endfor %}],
+                    datasets: [{
+                        label: 'Extra Runs',
+                        data: [{% for x in data %}'{{ x.sum }}',{% endfor %}],
+                        backgroundColor: [
+                            'orange', 'orange', 'orange', 'orange', 'orange', 'orange', 'orange', 'orange'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)', 'rgba(255, 99, 132, 1)', 'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)', 'rgba(255, 99, 132, 1)', 'rgba(255, 99, 132, 1)',
+                            'rgba(255, 99, 132, 1)', 'rgba(255, 99, 132, 1)'
+
+                        ],
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'IPL Matches played every Year',
+                        fontsize: 25
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+        });
+    </script>
+{% endblock scripts %}
+
+{% block content %}
+    <canvas id="myChart"></canvas>
+{% endblock content %}
+</body>
+</html>

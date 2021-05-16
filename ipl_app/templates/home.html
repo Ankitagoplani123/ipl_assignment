@@ -1,0 +1,218 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css"
+          href="{% static 'home.css' %}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- semantic UI -->
+    <link rel="stylesheet" type='text/css'
+          href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css">
+    <!--Chart js-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"
+            integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css"
+          integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous"/>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <title>HomePage</title>
+</head>
+
+<body>
+<header>
+    <div class="main">
+        <ul>
+            <li class="active"> <a href="/">Home</a></li>
+            <li><a href="/extra_runs">Extra Runs</a></li>
+            <li><a href="/economical_bowler">EconomicalBowler</a></li>
+            <li><a href="/team_victory_chart">TeamVictoryChart</a></li>
+        </ul>
+    </div>
+</header>
+{% block scripts %}
+    <script>
+        $(document).ready(function () {
+
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [{% for x in data %}'{{ x.season }}',{% endfor %}],
+                    datasets: [{
+                        label: 'Matches',
+                        data: [{% for x in data %}'{{ x.count }}',{% endfor %}],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)'
+                        ],
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'IPL Matches played every Year',
+                        fontsize: 25
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+        });
+
+        $(document).ready(function () {
+
+            var ctx = document.getElementById('myChart2').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [{% for x in data %}'{{ x.season }}',{% endfor %}],
+                    datasets: [{
+                        label: 'Sunrisers Hyderabad or Deccan Chargers',
+                        data: [{% for x in data0 %}'{{ x.count }}',{% endfor %}],
+                        backgroundColor: [
+                            'orange', 'orange', 'orange', 'orange', 'orange', 'orange', 'orange', 'orange', 'orange', 'orange'
+                        ],
+                    },
+                        {
+                            label: 'Rising Pune Supergiants or Pune Warriors',
+                            data: [{% for x in data1 %}'{{ x.count }}',{% endfor %}],
+                            backgroundColor: [
+                                'rgba(135,7,213,0.2)',
+                                'rgba(135,7,213,0.2)',
+                                'rgba(135,7,213,0.2)',
+                                'rgba(135,7,213,0.2)',
+                                'rgba(135,7,213,0.2)',
+                                'rgba(135,7,213,0.2)',
+                                'rgba(135,7,213,0.2)',
+                                'rgba(135,7,213,0.2)',
+                                'rgba(135,7,213,0.2)',
+                                'rgba(135,7,213,0.2)'
+                            ],
+                        },
+                        {
+                            label: 'Royal Challengers Bangalore',
+                            data: [{% for x in data2 %}'{{ x.count }}',{% endfor %}],
+                            backgroundColor: [
+                                'red', 'red', 'red', 'red', 'red', 'red', 'red', 'red', 'red', 'red'
+                            ],
+                        },
+                        {
+                            label: 'Kolkata Knight Riders',
+                            data: [{% for x in data3 %}'{{ x.count }}',{% endfor %}],
+                            backgroundColor: [
+                                'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black', 'black'
+                            ],
+                        },
+                        {
+                            label: 'Kings XI Punjab',
+                            data: [{% for x in data4 %}'{{ x.count }}',{% endfor %}],
+                            backgroundColor: [
+                                'rgba(95,27,3,0.2)', 'rgba(95,27,3,0.2)', 'rgba(95,27,3,0.2)',
+                                'rgba(95,27,3,0.2)', 'rgba(95,27,3,0.2)', 'rgba(95,27,3,0.2)',
+                                'rgba(95,27,3,0.2)', 'rgba(95,27,3,0.2)', 'rgba(95,27,3,0.2)', 'rgba(95,27,3,0.2)'
+                            ],
+                        },
+                        {
+                            label: 'Mumbai Indians',
+                            data: [{% for x in data5 %}'{{ x.count }}',{% endfor %}],
+                            backgroundColor: [
+                                'blue', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue', 'blue'
+                            ],
+                        },
+                        {
+                            label: 'Delhi Daredevils',
+                            data: [{% for x in data6 %}'{{ x.count }}',{% endfor %}],
+                            backgroundColor: [
+                                'voilet', 'voilet', 'voilet', 'voilet', 'voilet', 'voilet', 'voilet', 'voilet', 'voilet', 'voilet'
+                            ],
+                        },
+                        {
+                            label: 'Gujarat Lions',
+                            data: [{% for x in data7 %}'{{ x.count }}',{% endfor %}],
+                            backgroundColor: [
+                                'rgba(56,44,33,0.2)', 'rgba(56,44,33,0.2)', 'rgba(56,44,33,0.2)', 'rgba(56,44,33,0.2)'
+                                , 'rgba(56,44,33,0.2)', 'rgba(56,44,33,0.2)', 'rgba(56,44,33,0.2)', 'rgba(56,44,33,0.2)'
+                                , 'rgba(56,44,33,0.2)', 'rgba(56,44,33,0.2)'
+                            ],
+                        },
+                        {
+                            label: 'Chennai Super Kings',
+                            data: [{% for x in data8 %}'{{ x.count }}',{% endfor %}],
+                            backgroundColor: [
+                                'yellow', 'yellow', 'yellow', 'yellow', 'yellow', 'yellow', 'yellow', 'yellow', 'yellow', 'yellow'
+                            ],
+                        },
+                        {
+                            label: 'Rajasthan Royals',
+                            data: [{% for x in data9 %}'{{ x.count }}',{% endfor %}],
+                            backgroundColor: [
+                                'pink', 'pink', 'pink', 'pink', 'pink', 'pink', 'pink', 'pink', 'pink', 'pink'
+                            ],
+                        },
+                        {
+                            label: 'Kochi Tuskers Kerala',
+                            data: [{% for x in data10 %}'{{ x.count }}',{% endfor %}],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)',
+                                'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 0.2)'
+                            ],
+                        }
+                    ]
+                },
+                options: {
+                    title: {
+                        display: true,
+                        text: 'IPL Winners over all the Years',
+                        fontsize: 25
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            });
+
+        });
+    </script>
+{% endblock scripts %}
+
+{% block content %}
+    <canvas id="myChart"></canvas><br><br><br><br><br><br><br>
+    <canvas id="myChart2"></canvas>
+{% endblock content %}
+</body>
+</html>

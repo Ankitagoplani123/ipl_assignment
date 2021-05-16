@@ -44,3 +44,7 @@ class deliveries(models.Model):
     player_dismissed = models.CharField(max_length=50)
     dismissal_kind = models.CharField(max_length=50)
     fielder = models.CharField(max_length=50)
+
+
+class temp_model(models.Model):
+    form = models.IntegerField()
